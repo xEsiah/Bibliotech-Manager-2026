@@ -3,37 +3,39 @@ package com.estiam.biblio.config;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseManager {
-    // Instance unique (Partie 1.2.b)
     private static final DatabaseManager INSTANCE = new DatabaseManager();
     private Connection connection;
+    private Properties props;
 
-    // Constructeur privé (Partie 1.2.b)
     private DatabaseManager() {
         try {
-            Properties props = new Properties();
-            // Chargement depuis le fichier de configuration db.properties (Partie 1.2.c)
+            props = new Properties();
             InputStream input = getClass().getClassLoader().getResourceAsStream("ressources/db.properties");
-            if (input == null) {
-                System.out.println("Erreur : Fichier db.properties introuvable.");
-                return;
-            }
+            if (input == null) return;
             props.load(input);
-            
-            // Établissement de la connexion
-            this.connection = DriverManager.getConnection(
-                props.getProperty("db.url"),
-                props.getProperty("db.user"),
-                props.getProperty("db.password")
-            );
-            System.out.println("Connexion à la BDD réussie.");
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la BDD : " + e.getMessage());
+            System.out.println("Erreur config : " + e.getMessage());
         }
     }
 
     public static DatabaseManager getInstance() { return INSTANCE; }
-    public Connection getConnection() { return connection; }
+
+    public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(
+                    props.getProperty("db.url"),
+                    props.getProperty("db.user"),
+                    props.getProperty("db.password")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur reconnexion : " + e.getMessage());
+        }
+        return connection;
+    }
 }
