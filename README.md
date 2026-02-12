@@ -1,18 +1,21 @@
-## Getting Started
+# PROJET : BiblioTech Manager 2026
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+---
 
-## Folder Structure
+## CONFIGURATION DE LA BASE DE DONNÉES
 
-The workspace contains two folders by default, where:
+Changer le `db.properties` !
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+---
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## LANCEMENT DU PROJET
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+1. Ouvrez le projet dans votre IDE (VS Code, IntelliJ, Eclipse).
+2. Assurez-vous que le fichier .jar du dossier 'lib' est bien ajouté au Build Path.
+3. Exécutez la classe principale : src/com/estiam/biblio/main/App.java
 
-## Dependency Management
+---
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+> PS : J'aurais pu implémenter de quoi traduire tous les noms de genre également, pouvoir faire des recherches même avec le genre dans l'autre langue que celle de la BdD, également ajouter une option pour afficher tous les gens en BdD;
+>
+> Mais ce n'était pas obligatoire pour faire fonctionner l'application alors peut-être une prochaine fois !

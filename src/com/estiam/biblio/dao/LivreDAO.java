@@ -72,4 +72,42 @@ public class LivreDAO {
                 .filter(l -> l.getGenre().getLibelle_t().equalsIgnoreCase(genreLibelle))
                 .collect(Collectors.toList());
     }
+
+    // Méthodes pour les statistiques et l'export CSV 
+    public void afficherStatistiques() {
+        List<Livre> livres = getAllLivres();
+        Map<String, Long> stats = livres.stream()
+            .collect(Collectors.groupingBy(
+                l -> l.getGenre().getLibelle_t(), 
+                Collectors.counting()
+            ));
+        
+        System.out.println("📊 " + I18nManager.get("stats.title"));
+        stats.forEach((genre, count) -> 
+            System.out.println("   - " + genre + " : " + count)
+        );
+    }
+    public void exporterCSV() {
+        List<Livre> livres = getAllLivres();
+        String csvFile = "livres.csv";
+        
+        try (java.io.FileWriter writer = new java.io.FileWriter(csvFile)) {
+            writer.write("ID;Titre;Annee;Genre;Auteurs\n");
+            
+            for (Livre l : livres) {
+                String ligne = String.format("%d;%s;%d;%s;%s\n",
+                    l.getId_l(),
+                    l.getTitre_l().replace(";", ","),
+                    l.getAnneeInt(),
+                    l.getGenre().getLibelle_t(),
+                    l.getNomsAuteurs().replace(";", ",")
+                );
+                writer.write(ligne);
+            }
+            System.out.println(I18nManager.get("csv.success", csvFile));
+            
+        } catch (java.io.IOException e) {
+            System.out.println(I18nManager.get("error.csv") + " : " + e.getMessage());
+        }
+    }
 }

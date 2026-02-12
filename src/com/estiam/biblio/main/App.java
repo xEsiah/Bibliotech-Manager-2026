@@ -45,6 +45,8 @@ public class App {
             System.out.println(I18nManager.get("menu.option1"));
             System.out.println(I18nManager.get("menu.option2"));
             System.out.println(I18nManager.get("menu.option3"));
+            System.out.println(I18nManager.get("menu.option4"));
+            System.out.println(I18nManager.get("menu.option5"));
             System.out.println(I18nManager.get("menu.option0"));
             System.out.println("-----------------------------------");
             System.out.print(I18nManager.get("menu.choice"));
@@ -54,14 +56,12 @@ public class App {
                 scanner.nextLine(); 
 
                 switch (choix) {
-                    case 1:
-                        // --- LISTER ---
+                    case 1: // LISTER
                         System.out.println("\n" + I18nManager.get("book.list"));
                         livreDAO.afficherListePropre();
                         break;
 
-                    case 2:
-                        // --- FILTRER ---
+                    case 2: // FILTRER
                         System.out.print(I18nManager.get("book.filter.prompt"));
                         String genre = scanner.nextLine();
                         List<Livre> livresFiltres = livreDAO.filtrerParGenre(genre);
@@ -76,9 +76,16 @@ public class App {
                         }
                         break;
 
-                    case 3:
-                        // --- EMPRUNTER ---
+                    case 3: // EMPRUNTER 
                         gererEmprunt(scanner, exemplaireDAO, empruntDAO);
+                        break;
+
+                    case 4: // AFFICHER LES STATISTIQUES DE LIVRES PAR GENRE
+                        livreDAO.afficherStatistiques();
+                        break;
+
+                    case 5: // EXPORTER LA LISTE DES LIVRES EN CSV
+                        livreDAO.exporterCSV();
                         break;
 
                     case 0:
