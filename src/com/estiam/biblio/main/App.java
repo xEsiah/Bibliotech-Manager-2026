@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        // --- CHOIX LANGUE ---
+        // CHOIX LANGUE
         System.out.println("Select language / Choisissez la langue :");
         System.out.println("1. English");
         System.out.println("2. Français");
@@ -25,12 +25,10 @@ public class App {
             int choice = scanner.nextInt();
             if (choice == 1) lang = "en";
         }
-        scanner.nextLine(); // Vider le buffer
-        
-        // Initialiser la langue choisie
+        scanner.nextLine();
+
         I18nManager.setLocale(lang);
 
-        // Instanciation des DAO
         LivreDAO livreDAO = new LivreDAO();
         ExemplaireDAO exemplaireDAO = new ExemplaireDAO();
         EmpruntDAO empruntDAO = new EmpruntDAO();
